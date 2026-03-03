@@ -11,9 +11,63 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
+        
+        /* Side Panel Animation */
+        #side-panel {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        #side-panel.open {
+            transform: translateX(0);
+        }
+        .overlay {
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none;
+            opacity: 0;
+        }
+        .overlay.open {
+            pointer-events: auto;
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen p-4 md:p-12">
+
+    <!-- Background Overlay for Modal -->
+    <div id="overlay" class="overlay fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40" onclick="closePanel()"></div>
+
+    <!-- Right Side Popup Panel -->
+    <div id="side-panel" class="fixed top-0 right-0 h-full w-full md:w-[600px] bg-white shadow-2xl z-50 flex flex-col border-l border-slate-200">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white sticky top-0">
+            <h2 id="panel-title" class="text-xl font-bold text-slate-900">Technical Details</h2>
+            <button onclick="closePanel()" class="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                <i data-lucide="x" class="w-6 h-6 text-slate-400"></i>
+            </button>
+        </div>
+        <div class="p-6 overflow-y-auto">
+            <!-- Dynamic Image Container -->
+            <div id="panel-image-container" class="grid grid-cols-1 gap-4 mb-6">
+                <!-- Images will be injected here -->
+            </div>
+            
+            <!-- Placeholder (Only shows if no images) -->
+            <div id="image-placeholder" class="hidden mb-6 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 aspect-video flex items-center justify-center shadow-inner">
+                <div class="text-slate-400 flex flex-col items-center p-8 text-center">
+                    <i data-lucide="image" class="w-12 h-12 mb-3 opacity-20"></i>
+                    <p class="text-sm">Upload your screenshots to GitHub and name them correctly in the code.</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="text-xs font-bold text-blue-600 uppercase tracking-widest">Phase Description</h4>
+                <p id="panel-desc" class="text-slate-600 leading-relaxed text-lg italic"></p>
+                <hr class="border-slate-100">
+                <div id="technical-specs" class="space-y-2">
+                    <!-- Dynamic details can go here -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="max-w-4xl mx-auto">
         <!-- Header -->
@@ -29,14 +83,15 @@
             <p class="text-lg text-slate-600 max-w-2xl mx-auto">
                 A comprehensive technical workflow of the data migration and hybrid-cloud analytics infrastructure.
             </p>
+            <p class="mt-4 text-sm text-slate-400 italic">Click on any block to view multiple technical screenshots</p>
         </header>
 
         <!-- Flowchart Container -->
         <main class="flex flex-col items-center space-y-0" id="flow-container">
             
             <!-- Step 1 -->
-            <div class="flex flex-col items-center w-full max-w-2xl">
-                <div class="flex flex-col md:flex-row items-center p-6 bg-white rounded-xl shadow-lg border-l-4 border-blue-600 w-full transition-all hover:scale-[1.02]">
+            <div class="flex flex-col items-center w-full max-w-2xl cursor-pointer group" onclick="openPanel(1)">
+                <div class="flex flex-col md:flex-row items-center p-6 bg-white rounded-xl shadow-lg border-l-4 border-blue-600 w-full transition-all group-hover:scale-[1.02] group-hover:shadow-xl">
                     <div class="p-4 rounded-full bg-blue-100 mb-4 md:mb-0 md:mr-6">
                         <i data-lucide="settings" class="w-8 h-8 text-blue-600"></i>
                     </div>
@@ -48,6 +103,7 @@
                             <li>• Configured SSMS 22 for visual management</li>
                         </ul>
                     </div>
+                    <i data-lucide="maximize-2" class="w-5 h-5 text-slate-200 group-hover:text-blue-500 transition-colors"></i>
                 </div>
                 <div class="flex flex-col items-center my-4">
                     <div class="w-1 h-8 bg-slate-200 rounded-full"></div>
@@ -56,8 +112,8 @@
             </div>
 
             <!-- Step 2 -->
-            <div class="flex flex-col items-center w-full max-w-2xl">
-                <div class="flex flex-col md:flex-row items-center p-6 bg-white rounded-xl shadow-lg border-l-4 border-indigo-600 w-full transition-all hover:scale-[1.02]">
+            <div class="flex flex-col items-center w-full max-w-2xl cursor-pointer group" onclick="openPanel(2)">
+                <div class="flex flex-col md:flex-row items-center p-6 bg-white rounded-xl shadow-lg border-l-4 border-indigo-600 w-full transition-all group-hover:scale-[1.02] group-hover:shadow-xl">
                     <div class="p-4 rounded-full bg-indigo-100 mb-4 md:mb-0 md:mr-6">
                         <i data-lucide="file-archive" class="w-8 h-8 text-indigo-600"></i>
                     </div>
@@ -70,6 +126,7 @@
                             <li>• Full database restoration on server engine</li>
                         </ul>
                     </div>
+                    <i data-lucide="maximize-2" class="w-5 h-5 text-slate-200 group-hover:text-indigo-500 transition-colors"></i>
                 </div>
                 <div class="flex flex-col items-center my-4">
                     <div class="w-1 h-8 bg-slate-200 rounded-full"></div>
@@ -78,8 +135,8 @@
             </div>
 
             <!-- Step 3 -->
-            <div class="flex flex-col items-center w-full max-w-2xl">
-                <div class="flex flex-col md:flex-row items-center p-6 bg-white rounded-xl shadow-lg border-l-4 border-purple-600 w-full transition-all hover:scale-[1.02]">
+            <div class="flex flex-col items-center w-full max-w-2xl cursor-pointer group" onclick="openPanel(3)">
+                <div class="flex flex-col md:flex-row items-center p-6 bg-white rounded-xl shadow-lg border-l-4 border-purple-600 w-full transition-all group-hover:scale-[1.02] group-hover:shadow-xl">
                     <div class="p-4 rounded-full bg-purple-100 mb-4 md:mb-0 md:mr-6">
                         <i data-lucide="arrow-right-left" class="w-8 h-8 text-purple-600"></i>
                     </div>
@@ -92,6 +149,7 @@
                             <li>• Handled data type conversions & schema validation</li>
                         </ul>
                     </div>
+                    <i data-lucide="maximize-2" class="w-5 h-5 text-slate-200 group-hover:text-purple-500 transition-colors"></i>
                 </div>
                 <div class="flex flex-col items-center my-4">
                     <div class="w-1 h-8 bg-slate-200 rounded-full"></div>
@@ -100,8 +158,8 @@
             </div>
 
             <!-- Step 4 -->
-            <div class="flex flex-col items-center w-full max-w-2xl">
-                <div class="flex flex-col md:flex-row items-center p-6 bg-white rounded-xl shadow-lg border-l-4 border-orange-600 w-full transition-all hover:scale-[1.02]">
+            <div class="flex flex-col items-center w-full max-w-2xl cursor-pointer group" onclick="openPanel(4)">
+                <div class="flex flex-col md:flex-row items-center p-6 bg-white rounded-xl shadow-lg border-l-4 border-orange-600 w-full transition-all group-hover:scale-[1.02] group-hover:shadow-xl">
                     <div class="p-4 rounded-full bg-orange-100 mb-4 md:mb-0 md:mr-6">
                         <i data-lucide="network" class="w-8 h-8 text-orange-600"></i>
                     </div>
@@ -114,6 +172,7 @@
                             <li>• Exposed local database to secure cloud endpoint</li>
                         </ul>
                     </div>
+                    <i data-lucide="maximize-2" class="w-5 h-5 text-slate-200 group-hover:text-orange-500 transition-colors"></i>
                 </div>
                 <div class="flex flex-col items-center my-4">
                     <div class="w-1 h-8 bg-slate-200 rounded-full"></div>
@@ -122,8 +181,8 @@
             </div>
 
             <!-- Step 5 -->
-            <div class="flex flex-col items-center w-full max-w-2xl">
-                <div class="flex flex-col md:flex-row items-center p-6 bg-white rounded-xl shadow-lg border-l-4 border-emerald-600 w-full transition-all hover:scale-[1.02]">
+            <div class="flex flex-col items-center w-full max-w-2xl cursor-pointer group" onclick="openPanel(5)">
+                <div class="flex flex-col md:flex-row items-center p-6 bg-white rounded-xl shadow-lg border-l-4 border-emerald-600 w-full transition-all group-hover:scale-[1.02] group-hover:shadow-xl">
                     <div class="p-4 rounded-full bg-emerald-100 mb-4 md:mb-0 md:mr-6">
                         <i data-lucide="bar-chart-3" class="w-8 h-8 text-emerald-600"></i>
                     </div>
@@ -136,6 +195,7 @@
                             <li>• Verified high-performance querying on 3.4M records</li>
                         </ul>
                     </div>
+                    <i data-lucide="maximize-2" class="w-5 h-5 text-slate-200 group-hover:text-emerald-500 transition-colors"></i>
                 </div>
             </div>
 
@@ -160,8 +220,83 @@
         </footer>
     </div>
 
+    <!-- JAVASCRIPT SECTION -->
     <script>
-        // Initialize Lucide icons
+        // Data for each step - Now supports an array of images
+        const panelData = {
+            1: {
+                title: "Environment Preparation",
+                // ADD MULTIPLE IMAGE NAMES HERE
+                images: ["image1.png", "image2.png"], 
+                desc: "Technical setup showing SQL Server 2025 installation and the SSMS management console."
+            },
+            2: {
+                title: "Extraction & Restoration",
+                images: ["image3.png"], 
+                desc: "Resolution of security read-permissions and restoration of the proprietary .bak database."
+            },
+            3: {
+                title: "Cross-Platform Migration",
+                images: ["image4.png"],
+                desc: "The Workbench Migration Wizard workflow showing schema conversion and bulk data transfer."
+            },
+            4: {
+                title: "Hybrid Cloud Connectivity",
+                images: ["image5.png", "image6.png", "image7.png", "image8.png"],
+                desc: "Step-by-step setup of the ngrok secure bridge and MySQL remote authentication overhaul."
+            },
+            5: {
+                title: "Cloud Analytics Pipeline",
+                images: ["image9.png"],
+                desc: "Google Colab integration displaying high-performance SQLAlchemy querying on 3.4M records."
+            }
+        };
+
+        function openPanel(id) {
+            const data = panelData[id];
+            const panel = document.getElementById('side-panel');
+            const overlay = document.getElementById('overlay');
+            const imageContainer = document.getElementById('panel-image-container');
+            const placeholder = document.getElementById('image-placeholder');
+
+            document.getElementById('panel-title').innerText = data.title;
+            document.getElementById('panel-desc').innerText = data.desc;
+
+            // Clear previous images
+            imageContainer.innerHTML = '';
+
+            if (data.images && data.images.length > 0) {
+                placeholder.classList.add('hidden');
+                
+                // Add each image to the grid
+                data.images.forEach(imgSrc => {
+                    const img = document.createElement('img');
+                    img.src = imgSrc;
+                    img.className = "w-full rounded-xl border border-slate-200 shadow-sm object-contain bg-slate-100";
+                    img.alt = "Technical Screenshot";
+                    // Add click to expand logic (optional)
+                    img.onclick = () => window.open(imgSrc, '_blank');
+                    img.title = "Click to view full size";
+                    img.style.cursor = "zoom-in";
+                    imageContainer.appendChild(img);
+                });
+            } else {
+                placeholder.classList.remove('hidden');
+            }
+
+            panel.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closePanel() {
+            const panel = document.getElementById('side-panel');
+            const overlay = document.getElementById('overlay');
+            panel.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow = ''; 
+        }
+
         lucide.createIcons();
     </script>
 </body>
