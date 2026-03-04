@@ -70,17 +70,32 @@
     </div>
 
     <div class="max-w-4xl mx-auto">
-        <!-- Header -->
-        <header class="text-center mb-12">
-            <div class="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-sm font-semibold mb-4">
-                <i data-lucide="server" class="w-4 h-4"></i>
+        <!-- Branding & Profile Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+            <div class="flex items-center gap-4">
+                <!-- University Logo - Pointing to image folder -->
+                <img src="image/logo.svg" alt="University Logo" class="h-14 w-auto object-contain" onerror="this.src='https://via.placeholder.com/150x50?text=University+Logo'">
+                <div class="border-l-2 border-slate-200 pl-4">
+                    <h2 class="text-xl font-extrabold text-slate-900 leading-tight">Saurab Barua</h2>
+                    <p class="text-blue-600 font-bold text-sm">ID: 30348215</p>
+                    <p class="text-xs text-slate-500 font-medium uppercase tracking-tighter">South Westphalia University of Applied Sciences</p>
+                </div>
+            </div>
+            
+            <!-- Connection Status Badge -->
+            <div class="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
+                <i data-lucide="server" class="w-3.5 h-3.5"></i>
                 <span>Local</span>
-                <i data-lucide="arrow-right-left" class="w-4 h-4"></i>
-                <i data-lucide="cloud" class="w-4 h-4"></i>
+                <i data-lucide="arrow-right-left" class="w-3.5 h-3.5"></i>
+                <i data-lucide="cloud" class="w-3.5 h-3.5"></i>
                 <span>Cloud</span>
             </div>
-            <h1 class="text-4xl font-extrabold text-slate-900 mb-4">Thesis Project Architecture</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+        </div>
+
+        <!-- Main Title Header -->
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Thesis Project Architecture</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
                 A comprehensive technical workflow of the data migration and hybrid-cloud analytics infrastructure.
             </p>
             <p class="mt-4 text-sm text-slate-400 italic">Click on any block to view multiple technical screenshots</p>
@@ -225,7 +240,7 @@
         </main>
 
         <!-- Footer -->
-        <footer class="mt-16 text-center border-t border-slate-200 pt-8">
+        <footer class="mt-16 text-center border-t border-slate-200 pt-8 pb-12">
             <div class="flex justify-center space-x-8 text-slate-400 text-sm">
                 <div class="flex items-center space-x-2">
                     <i data-lucide="database" class="w-4 h-4"></i>
@@ -274,7 +289,7 @@
             },
             6: {
                 title: "Business Intelligence Integration",
-                images: ["image/BI.png"],
+                images: ["image/Screenshot 2026-03-04 105142.png"],
                 desc: "Connection between Power BI Desktop and the local database server (127.0.0.1:3306) to enable real-time visualization of the 3.4M migrated records."
             }
         };
