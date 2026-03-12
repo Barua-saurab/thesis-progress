@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thesis Project Architecture Flowchart</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Side Panel Animation */
+        #side-panel {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        #side-panel.open {
+            transform: translateX(0);
+        }
+        .overlay {
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none;
+            opacity: 0;
+        }
+        .overlay.open {
+            pointer-events: auto;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen p-4 md:p-12">
+
+    <!-- Background Overlay for Modal -->
+    <div id="overlay" class="overlay fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40" onclick="closePanel()"></div>
+
+    <!-- Right Side Popup Panel -->
+    <div id="side-panel" class="fixed top-0 right-0 h-full w-full md:w-[600px] bg-white shadow-2xl z-50 flex flex-col border-l border-slate-200">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white sticky top-0">
+            <h2 id="panel-title" class="text-xl font-bold text-slate-900">Technical Details</h2>
+            <button onclick="closePanel()" class="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                <i data-lucide="x" class="w-6 h-6 text-slate-400"></i>
+            </button>
+        </div>
+        <div class="p-6 overflow-y-auto">
+            <!-- Dynamic Image Container -->
+            <div id="panel-image-container" class="grid grid-cols-1 gap-4 mb-6">
+                <!-- Images will be injected here -->
+            </div>
+            
+            <!-- Placeholder (Only shows if no images) -->
+            <div id="image-placeholder" class="hidden mb-6 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 aspect-video flex items-center justify-center shadow-inner">
+                <div class="text-slate-400 flex flex-col items-center p-8 text-center">
+                    <i data-lucide="image" class="w-12 h-12 mb-3 opacity-20"></i>
+                    <p class="text-sm">Upload your screenshots to GitHub and name them correctly in the code.</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="text-xs font-bold text-blue-600 uppercase tracking-widest">Phase Description</h4>
+                <p id="panel-desc" class="text-slate-600 leading-relaxed text-lg italic"></p>
+                <hr class="border-slate-100">
+                <div id="technical-specs" class="space-y-2">
+                    <!-- Dynamic details can go here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Branding & Profile Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+            <div class="flex items-center gap-4">
+                <!-- University Logo - Pointing to image folder -->
+                <img src="image/logo.svg" alt="University Logo" class="h-14 w-auto object-contain" onerror="this.src='https://via.placeholder.com/150x50?text=University+Logo'">
+                <div class="border-l-2 border-slate-200 pl-4">
+                    <h2 class="text-xl font-extrabold text-slate-900 leading-tight">Saurab Barua</h2>
+                    <p class="text-blue-600 font-bold text-sm">ID: 30348215</p>
+                
+                </div>
+            </div>
+            
+            <!-- Connection Status Badge -->
+            <div class="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
+                <i data-lucide="server" class="w-3.5 h-3.5"></i>
+                <span>Local</span>
+                <i data-lucide="arrow-right-left" class="w-3.5 h-3.5"></i>
+                <i data-lucide="cloud" class="w-3.5 h-3.5"></i>
+                <span>Cloud</span>
+            </div>
+        </div>
+
+        <!-- Main Title Header -->
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Thesis Project Architecture</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                A comprehensive technical workflow of the data migration and hybrid-cloud analytics infrastructure.
+            </p>
+            <p class="mt-4 text-sm text-slate-400 italic">Click on any block to view multiple technical screenshots</p>
+        </header>
