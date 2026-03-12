@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Side Panel Animation */
+.side-panel-container {
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+}
+.side-panel-container.open {
+    transform: translateX(0);
+}
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background-color: rgb(17 24 39 / 0.4);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+.overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
