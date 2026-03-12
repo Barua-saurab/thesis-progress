@@ -8,28 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        
-        /* Side Panel Animation */
-        #side-panel {
-            transition: transform 0.3s ease-in-out;
-            transform: translateX(100%);
-        }
-        #side-panel.open {
-            transform: translateX(0);
-        }
-        .overlay {
-            transition: opacity 0.3s ease-in-out;
-            pointer-events: none;
-            opacity: 0;
-        }
-        .overlay.open {
-            pointer-events: auto;
-            opacity: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-slate-50 min-h-screen p-4 md:p-12">
 
@@ -37,7 +16,7 @@
     <div id="overlay" class="overlay fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40" onclick="closePanel()"></div>
 
     <!-- Right Side Popup Panel -->
-    <div id="side-panel" class="fixed top-0 right-0 h-full w-full md:w-[600px] bg-white shadow-2xl z-50 flex flex-col border-l border-slate-200">
+    <div id="side-panel" class="side-panel-container">
         <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white sticky top-0">
             <h2 id="panel-title" class="text-xl font-bold text-slate-900">Technical Details</h2>
             <button onclick="closePanel()" class="p-2 hover:bg-slate-100 rounded-full transition-colors">
@@ -46,11 +25,9 @@
         </div>
         <div class="p-6 overflow-y-auto">
             <!-- Dynamic Image Container -->
-            <div id="panel-image-container" class="grid grid-cols-1 gap-4 mb-6">
-                <!-- Images will be injected here -->
-            </div>
-            
-            <!-- Placeholder (Only shows if no images) -->
+            <div id="panel-image-container" class="grid grid-cols-1 gap-4 mb-6"></div>
+
+            <!-- Placeholder -->
             <div id="image-placeholder" class="hidden mb-6 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 aspect-video flex items-center justify-center shadow-inner">
                 <div class="text-slate-400 flex flex-col items-center p-8 text-center">
                     <i data-lucide="image" class="w-12 h-12 mb-3 opacity-20"></i>
@@ -62,9 +39,7 @@
                 <h4 class="text-xs font-bold text-blue-600 uppercase tracking-widest">Phase Description</h4>
                 <p id="panel-desc" class="text-slate-600 leading-relaxed text-lg italic"></p>
                 <hr class="border-slate-100">
-                <div id="technical-specs" class="space-y-2">
-                    <!-- Dynamic details can go here -->
-                </div>
+                <div id="technical-specs" class="space-y-2"></div>
             </div>
         </div>
     </div>
@@ -73,16 +48,12 @@
         <!-- Branding & Profile Header -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
             <div class="flex items-center gap-4">
-                <!-- University Logo - Pointing to image folder -->
                 <img src="image/logo.svg" alt="University Logo" class="h-14 w-auto object-contain" onerror="this.src='https://via.placeholder.com/150x50?text=University+Logo'">
                 <div class="border-l-2 border-slate-200 pl-4">
                     <h2 class="text-xl font-extrabold text-slate-900 leading-tight">Saurab Barua</h2>
                     <p class="text-blue-600 font-bold text-sm">ID: 30348215</p>
-                
                 </div>
             </div>
-            
-            <!-- Connection Status Badge -->
             <div class="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
                 <i data-lucide="server" class="w-3.5 h-3.5"></i>
                 <span>Local</span>
@@ -100,3 +71,33 @@
             </p>
             <p class="mt-4 text-sm text-slate-400 italic">Click on any block to view multiple technical screenshots</p>
         </header>
+
+        <!-- Flowchart Container -->
+        <main class="flex flex-col items-center space-y-0" id="flow-container">
+            <!-- Steps 1–6 (same structure; kept inline for brevity) -->
+            <!-- ... (keep your existing step `<div>` blocks inside `#flow-container`) -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-16 text-center border-t border-slate-200 pt-8 pb-12">
+            <div class="flex justify-center space-x-8 text-slate-400 text-sm">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="database" class="w-4 h-4"></i>
+                    <span>3.4M+ Records</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>Secure Tunnel</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="file-code" class="w-4 h-4"></i>
+                    <span>Python / SQL</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
